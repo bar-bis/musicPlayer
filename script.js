@@ -9,6 +9,8 @@ const durationEl = document.getElementById('duration');
 const prevButton = document.getElementById('prev');
 const playButton = document.getElementById('play');
 const nextButton = document.getElementById('next');
+const muteButton = document.getElementById('mute');
+const volumeButton = document.getElementById('volume');
 
 //Music
 const songs = [
@@ -43,6 +45,7 @@ function playSong() {
     playButton.classList.replace('fa-play-circle', 'fa-pause-circle');
     playButton.setAttribute('title', "Pause");
     music.play();
+    music.volume = 1;
 }
 
 //Pause song
@@ -128,6 +131,28 @@ function setProgressBar(e) {
     music.currentTime = (clickX / width) * duration;
     playSong();
 }
+// Check if is muted
+let isNotMuted = false;
+
+//Mute & unmute song
+function muteSong() {
+    music.muted = true;
+    isNotMuted = false;
+    muteButton.classList.replace('fa-volume-mute', 'fa-volume-up');
+    muteButton.setAttribute('title', "Unmute");
+}
+
+function unmuteSong() {
+    music.muted = false;
+    isNotMuted = true;
+    muteButton.classList.replace('fa-volume-up', 'fa-volume-mute');
+    muteButton.setAttribute('title', "Mute");
+}
+
+// Mute or unmute
+muteButton.addEventListener('click', () => (isNotMuted ? muteSong() : unmuteSong()));
+
+
 
 // event listeners
 prevButton.addEventListener('click', prevSong);
